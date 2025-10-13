@@ -1,0 +1,45 @@
+name: Test and Publish with uv
+
+on:
+  push:
+    tags:
+      - 'v*'  # Only trigger on version tags like v1.0.0
+
+jobs:
+  test-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
+
+    - name: Create uv virtualenv
+      run: uv venv
+
+    - name: Build wheel
+      run: |
+        source .venv/bin/activate
+        uv build
+
+    - name: Install test dependencies
+      run: |
+        source .venv/bin/activate
+        uv pip install --group test
+        uv pip install dist/*.whl
+
+    - name: Run tests
+      run: |
+        source .venv/bin/activate
+        .venv/bin/pytest --pyargs vg
+
+    - name: Build package
+      run: uv build
+
+    - name: Publish to PyPI
+      if: success()  # Only run if all previous steps succeeded
+      env:
+        UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+      run: uv publish

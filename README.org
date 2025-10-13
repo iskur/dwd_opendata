@@ -1,0 +1,71 @@
+* German Weather Service (DWD) Open Data Client
+
+A Python library for downloading and processing meteorological data from the German Weather Service (Deutscher Wetterdienst - DWD) open data platform.
+
+* Features
+
+- Load data from multiple stations and variables into xarray DataArrays
+- Station mapping functionality to identify which stations provide specific variables
+- Automatic handling of DWD data structure idiosyncrasies
+
+* Dependencies
+
+#+begin_src 
+cartopy
+matplotlib
+numpy
+pandas
+xarray
+tqdm
+#+end_src
+
+* Usage
+
+Find stations that offer a set of variables within a bounding box and time frame:
+
+#+BEGIN_SRC python
+import dwd_opendata as dwd
+from datetime import datetime
+
+start = datetime(1980, 1, 1)
+end = datetime(2016, 12, 31)
+variables = ("wind", "air_temperature", "sun", "precipitation")
+fig, ax = map_stations(
+    variables,
+    lon_min=7,
+    lat_min=47.4,
+    lon_max=12.0,
+    lat_max=49.0,
+    start=start,
+    end=end,
+)
+#+END_SRC
+
+[[file:source/station_map.png][Station map]]
+
+Download data for multiple stations and variables at once and load as an =xarray.DataArray:=
+
+#+begin_src python
+load_data(
+    ("Konstanz", "Feldberg/Schwarzwald"),
+    variables=variables,
+    start_year=start,
+    end_year=end,
+)
+#+end_src
+
+* Data Directory
+
+By default, data is stored in =~/data/opendata_dwd=.
+
+* Status
+
+⚠️ *Experimental*: This library is under active development and the API is not stable yet.
+
+* License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+* Acknowledgments
+
+Data provided by Deutscher Wetterdienst (DWD) - German Weather Service
