@@ -74,7 +74,7 @@ fig, ax = dwd.map_stations(
 )
 ```
 
-[Station map](source/station_map.png)
+[Station map](images/station_map.png)
 
 Download data for multiple stations and variables at once and load as an
 `xarray.DataArray:`
