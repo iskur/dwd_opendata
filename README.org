@@ -12,16 +12,35 @@ A Python library for downloading and processing meteorological data from the Ger
 - Station mapping functionality to identify which stations provide specific variables
 - Automatic handling of DWD data structure idiosyncrasies
 
-* Dependencies
+* Installation
 
-#+begin_src 
-cartopy
-matplotlib
-numpy
-pandas
-xarray
-tqdm
+This project uses [[https://docs.astral.sh/uv/][uv]] for package management. If you don't have uv installed, follow the [[https://docs.astral.sh/uv/getting-started/installation/][installation instructions]].
+
+** From source
+
+Clone the repository and install with uv:
+
+#+begin_src bash
+git clone https://github.com/yourusername/dwd_opendata_client.git
+cd dwd_opendata_client
+uv sync
 #+end_src
+
+** Development installation
+
+To install with development dependencies:
+
+#+begin_src bash
+uv sync --all-extras
+#+end_src
+
+* Key Dependencies
+
+- [[https://xarray.dev/][xarray]] - For handling multi-dimensional meteorological data
+- [[https://pandas.pydata.org/][pandas]] - Data processing and manipulation
+- [[https://scitools.org.uk/cartopy/][cartopy]] - Mapping and geospatial visualization
+
+All dependencies are managed by uv and will be installed automatically with =uv sync=.
 
 * Usage
 
@@ -34,7 +53,7 @@ from datetime import datetime
 start = datetime(1980, 1, 1)
 end = datetime(2016, 12, 31)
 variables = ("wind", "air_temperature", "sun", "precipitation")
-fig, ax = map_stations(
+fig, ax = dwd.map_stations(
     variables,
     lon_min=7,
     lat_min=47.4,
@@ -50,7 +69,7 @@ fig, ax = map_stations(
 Download data for multiple stations and variables at once and load as an =xarray.DataArray:=
 
 #+begin_src python
-load_data(
+data = dwd.load_data(
     ("Konstanz", "Feldberg/Schwarzwald"),
     variables=variables,
     start_year=start,
@@ -60,7 +79,7 @@ load_data(
 
 * Data Directory
 
-By default, data is stored in =~/data/opendata_dwd=.
+By default, data is stored in =~/.local/share/opendata_dwd= (following XDG Base Directory specification). You can override this by setting the =XDG_DATA_HOME= environment variable.
 
 * Status
 

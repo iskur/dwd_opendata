@@ -15,14 +15,41 @@ platform.
   specific variables
 - Automatic handling of DWD data structure idiosyncrasies
 
-# Dependencies
+# Installation
 
-    cartopy
-    matplotlib
-    numpy
-    pandas
-    xarray
-    tqdm
+This project uses [uv](https://docs.astral.sh/uv/) for package
+management. If you don't have uv installed, follow the [installation
+instructions](https://docs.astral.sh/uv/getting-started/installation/).
+
+## From source
+
+Clone the repository and install with uv:
+
+``` bash
+git clone https://github.com/yourusername/dwd_opendata_client.git
+cd dwd_opendata_client
+uv sync
+```
+
+## Development installation
+
+To install with development dependencies:
+
+``` bash
+uv sync --all-extras
+```
+
+# Key Dependencies
+
+- [xarray](https://xarray.dev/) - For handling multi-dimensional
+  meteorological data
+- [pandas](https://pandas.pydata.org/) - Data processing and
+  manipulation
+- [cartopy](https://scitools.org.uk/cartopy/) - Mapping and geospatial
+  visualization
+
+All dependencies are managed by uv and will be installed automatically
+with `uv sync`.
 
 # Usage
 
@@ -36,7 +63,7 @@ from datetime import datetime
 start = datetime(1980, 1, 1)
 end = datetime(2016, 12, 31)
 variables = ("wind", "air_temperature", "sun", "precipitation")
-fig, ax = map_stations(
+fig, ax = dwd.map_stations(
     variables,
     lon_min=7,
     lat_min=47.4,
@@ -53,7 +80,7 @@ Download data for multiple stations and variables at once and load as an
 `xarray.DataArray:`
 
 ``` python
-load_data(
+data = dwd.load_data(
     ("Konstanz", "Feldberg/Schwarzwald"),
     variables=variables,
     start_year=start,
@@ -63,7 +90,9 @@ load_data(
 
 # Data Directory
 
-By default, data is stored in `~/data/opendata_dwd`.
+By default, data is stored in `~/.local/share/opendata_dwd` (following
+XDG Base Directory specification). You can override this by setting the
+`XDG_DATA_HOME` environment variable.
 
 # Status
 
