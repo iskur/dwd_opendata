@@ -1,5 +1,9 @@
 * German Weather Service (DWD) Open Data Client
 
+[[https://img.shields.io/badge/python-3.13+-blue.svg][https://img.shields.io/badge/python-3.13+-blue.svg]]
+[[https://img.shields.io/badge/license-MIT-green.svg][https://img.shields.io/badge/license-MIT-green.svg]]
+[[https://img.shields.io/badge/status-experimental-orange.svg][https://img.shields.io/badge/status-experimental-orange.svg]]
+
 A Python library for downloading and processing meteorological data from the German Weather Service (Deutscher Wetterdienst - DWD) open data platform.
 
 * Features
