@@ -124,6 +124,22 @@ uv build
 
 The wheels will be created in the `dist/` directory.
 
+## Testing Releases on TestPyPI
+
+Before releasing to production PyPI, you can test the publishing
+workflow on TestPyPI:
+
+1.  Create a test tag: `git tag vX.Y.Z-test`
+2.  Push the tag: `git push origin vX.Y.Z-test`
+3.  Monitor the workflow at
+    <https://github.com/iskur/dwd_opendata/actions>
+4.  Verify the release on <https://test.pypi.org/project/dwd_opendata/>
+5.  Test installation:
+    `pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ dwd_opendata`
+
+Once verified, create the production release tag without the `-test`
+suffix.
+
 # Status
 
 ⚠️ **Experimental**: This library is under active development and the
