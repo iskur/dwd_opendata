@@ -15,7 +15,7 @@ dependencies = [
     "cartopy>=0.24.1",
     "pandas>=2.3.0",
     "tqdm>=4.67.1",
-    "xarray>=2025.4.0",
+    "xarray>=2024.1.0",
 ]
 
 [project.optional-dependencies]

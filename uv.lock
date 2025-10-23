@@ -155,7 +155,7 @@ requires-dist = [
     { name = "cartopy", marker = "extra == 'plot'", specifier = ">=0.24.1" },
     { name = "pandas", specifier = ">=2.3.0" },
     { name = "tqdm", specifier = ">=4.67.1" },
-    { name = "xarray", specifier = ">=2025.4.0" },
+    { name = "xarray", specifier = ">=2024.1.0" },
 ]
 provides-extras = ["plot"]
 
