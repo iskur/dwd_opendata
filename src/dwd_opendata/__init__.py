@@ -522,6 +522,31 @@ def load_station(
     start_year: Optional[int] = None,
     end_year: Optional[int] = None,
 ) -> xr.DataArray:
+    """
+    Load meteorological data for a single station from the DWD open data platform.
+
+    Parameters
+    ----------
+    station_name : str
+        Name of the weather station (e.g., "Berlin", "Munich")
+    variables : Union[str, List[str]]
+        Variable(s) to load. Can be a string or list of strings.
+    redownload : bool, optional
+        Force redownload of data files. Default: False
+    era : str, optional
+        Era of data (e.g., "historical", "recent"). Default: None
+    time : str, optional
+        Time resolution of data: "hourly", "daily", or "10_minutes". Default: "hourly"
+    start_year : int, optional
+        Start year for data range. None (default) means from earliest available data.
+    end_year : int, optional
+        End year for data range. None (default) means to latest available data.
+
+    Returns
+    -------
+    xr.DataArray
+        Data for the requested station and variables
+    """
     if isinstance(variables, str):
         variables = (variables,)
     var_list = [
@@ -557,6 +582,31 @@ def load_data(
     end_year: Optional[int] = None,
     verbose: bool = False,
 ) -> xr.Dataset:
+    """
+    Load meteorological data for multiple stations from the DWD open data platform.
+
+    Parameters
+    ----------
+    station_names : Union[str, List[str]]
+        Station name(s) to load. Can be a string or list of strings (e.g., ("Berlin", "Munich"))
+    variables : Union[str, List[str]]
+        Variable(s) to load. Can be a string or list of strings.
+    redownload : bool, optional
+        Force redownload of data files. Default: False
+    time : str, optional
+        Time resolution: "hourly", "daily", or "10_minutes". Default: "hourly"
+    start_year : int, optional
+        Start year for data range. None (default) means from earliest available data.
+    end_year : int, optional
+        End year for data range. None (default) means to latest available data.
+    verbose : bool, optional
+        Show progress bar. Default: False
+
+    Returns
+    -------
+    xr.Dataset
+        Combined data for all requested stations and variables
+    """
     progress = tqdm if verbose else lambda x: x
     if isinstance(station_names, str):
         station_names = (station_names,)
@@ -624,6 +674,28 @@ def get_metadata(
     time: str = "hourly",
     redownload: bool = False,
 ) -> pd.DataFrame:
+    """
+    Get metadata for stations offering requested variables.
+
+    Returns stations that provide all requested variables with their location
+    and availability information.
+
+    Parameters
+    ----------
+    variables : Union[str, List[str]]
+        Variable(s) to search for
+    era : str, optional
+        Era of data (e.g., "historical", "recent"). Default: None
+    time : str, optional
+        Time resolution: "hourly", "daily", or "10_minutes". Default: "hourly"
+    redownload : bool, optional
+        Force redownload of metadata. Default: False
+
+    Returns
+    -------
+    pd.DataFrame
+        Metadata for matching stations including name, location, and date range
+    """
     if isinstance(variables, str):
         variables = [variables]
     variable_metadata = {
@@ -653,6 +725,31 @@ def map_stations(
     end: Optional[datetime.datetime] = None,
     **skwds,
 ) -> Tuple[plt.Figure, plt.Axes]:
+    """
+    Create a map showing which stations provide requested variables in a geographic region.
+
+    Parameters
+    ----------
+    variables : Union[str, List[str]]
+        Variable(s) to search for
+    lon_min : float, optional
+        Minimum longitude of bounding box. Default: None (world extent)
+    lat_min : float, optional
+        Minimum latitude of bounding box. Default: None (world extent)
+    lon_max : float, optional
+        Maximum longitude of bounding box. Default: None (world extent)
+    lat_max : float, optional
+        Maximum latitude of bounding box. Default: None (world extent)
+    start : datetime, optional
+        Start date for data availability filter. Default: None (no filtering)
+    end : datetime, optional
+        End date for data availability filter. Default: None (no filtering)
+
+    Returns
+    -------
+    tuple[matplotlib.figure.Figure, matplotlib.axes.Axes]
+        Figure and axes objects for further customization
+    """
     metadata = get_metadata(variables)
     metadata = filter_metadata(
         metadata, lon_min, lat_min, lon_max, lat_max, start, end
