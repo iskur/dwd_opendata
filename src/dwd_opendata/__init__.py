@@ -32,6 +32,8 @@ ftp_url = "opendata.dwd.de"
 
 DEBUG = False
 
+__version__ = "0.1.0"
+
 
 def shorten_compound_varnames(func):
     @functools.wraps(func)
