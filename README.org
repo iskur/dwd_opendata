@@ -81,6 +81,34 @@ data = dwd.load_data(
 
 By default, data is stored in =~/.local/share/opendata_dwd= (following XDG Base Directory specification). You can override this by setting the =XDG_DATA_HOME= environment variable.
 
+* CI/CD and Publishing
+
+The project uses GitHub Actions to automatically build wheels on pushes to main and publish to PyPI when a version tag is created.
+
+** Releasing a New Version
+
+To release a new version:
+
+1. Update the version in =pyproject.toml=
+2. Update the relevant section in =CHANGELOG.md= with release notes
+3. Create a git tag: =git tag vX.Y.Z=
+4. Push the tag: =git push origin vX.Y.Z=
+
+The GitHub Actions workflow will automatically:
+- Build wheels
+- Create a GitHub Release with the changelog excerpt
+- Publish the wheels to PyPI
+
+** Building Locally
+
+To build wheels locally using uv:
+
+#+begin_src bash
+uv build
+#+end_src
+
+The wheels will be created in the =dist/= directory.
+
 * Status
 
 ⚠️ *Experimental*: This library is under active development and the API is not stable yet.
