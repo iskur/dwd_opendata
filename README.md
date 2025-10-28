@@ -18,6 +18,11 @@ platform.
   specific variables
 - Automatic handling of DWD data structure idiosyncrasies
 
+# Status
+
+⚠️ **Experimental**: This library is under active development and the
+API is not stable yet.
+
 # Installation
 
 This project uses [uv](https://docs.astral.sh/uv/) for package
@@ -142,11 +147,6 @@ workflow on TestPyPI:
 
 Once verified, create the production release tag without the `-test`
 suffix.
-
-# Status
-
-⚠️ **Experimental**: This library is under active development and the
-API is not stable yet.
 
 # License
 

@@ -15,6 +15,10 @@ A Python library for downloading and processing meteorological data from the Ger
 - Station mapping functionality to identify which stations provide specific variables
 - Automatic handling of DWD data structure idiosyncrasies
 
+* Status
+
+⚠️ *Experimental*: This library is under active development and the API is not stable yet.
+
 * Installation
 
 This project uses [[https://docs.astral.sh/uv/][uv]] for package management. If you don't have uv installed, follow the [[https://docs.astral.sh/uv/getting-started/installation/][installation instructions]].
@@ -123,10 +127,6 @@ Before releasing to production PyPI, you can test the publishing workflow on Tes
 5. Test installation: =pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ dwd_opendata=
 
 Once verified, create the production release tag without the =-test= suffix.
-
-* Status
-
-⚠️ *Experimental*: This library is under active development and the API is not stable yet.
 
 * License
 
